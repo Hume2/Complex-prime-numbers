@@ -106,14 +106,17 @@ void ukaz_pole() {
 
 void obsad(Komplex a, Komplex b) {
   Komplex c = a * b;
-  if (dej(b).def && c.abs() < max_abs) {
+  if (dej(b).def && c.im < max_abs && c.re < max_abs && c.abs() < max_abs) {
     dej(c).def = true;
   }
 }
 
-void bublej(Komplex z) {
+void bublej(Komplex z, int max_d) {
+  if (z.re || z.im) {
+    max_d = min(max_d, max_abs / z.abs());
+  }
   int x, y, d;
-  for (d = 0; d < w; d++) {
+  for (d = 0; d <= max_d; d++) {
     x = d;
     for (y = 0; y <= d; y++) {
       obsad(z, Komplex(x, y));
@@ -132,8 +135,8 @@ void zkus_cislo(Komplex z, int d) {
     v.def = true;
     v.pr = true;
     z.vytiskni();
-    bublej(z);
   }
+  bublej(z, d);
 }
 
 int main(int argc, char** arg) {
