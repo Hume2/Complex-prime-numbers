@@ -9,4 +9,8 @@ To generate a visual map put the text map onto a bitmap and use brightness and b
 
 0 + 1i is a prime number too, so all numbers those are not in the first quadrant can't be prime numbers, so only one quadrant is considered.
 
-![Prime numbers in complex, range 0 - 200](https://github.com/Hume2/Complex-prime-numbers/blob/d7d917ba81f1e9a07f7f575b7edd9b410b515863/numbers_0_199.png?raw=true)
+Range 0 - 200
+![Prime numbers in complex, range 0 - 200](https://github.com/Hume2/Complex-prime-numbers/blob/master/numbers_0_199.png?raw=true)
+
+Range 0 - 500, now without text
+![Prime numbers in complex, range 0 - 500](https://github.com/Hume2/Complex-prime-numbers/blob/master/numbers_0_499.png?raw=true)
