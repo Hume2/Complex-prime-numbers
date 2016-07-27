@@ -11,6 +11,11 @@ using namespace std;
 
 struct Komplex {
   public:
+    Komplex() :
+      re(),
+      im()
+    { }
+
     Komplex(int r, int i) :
       re(r),
       im(i)
@@ -35,6 +40,11 @@ struct Komplex {
 
 struct Vysledek {
   public:
+    Vysledek() :
+      def(),
+      pr()
+    { }
+
     Vysledek(bool def_, bool pr_) :
       def(def_),
       pr(pr_)
@@ -48,7 +58,8 @@ Komplex operator* (Komplex x, Komplex y) {
 }
 
 const int w = 201, h = 201, max_abs = 200;
-vector<Vysledek> cisla = vector<Vysledek>(w*h, Vysledek(false, false));
+Vysledek cisla[w*h];
+FILE* f;
 
 Vysledek& dej(Komplex z) {
   while (z.re < 0 || z.im < 0) {
@@ -62,27 +73,33 @@ void ukaz_pole() {
   for (int y = h-1; y >= 0; y--) {
     int t = ((y%1000)/10);
     if (t < 10) {
-      cout << '0' << t << "  ";
+      fprintf(f, "0%d  ", t);
+      //cout << '0' << t << "  ";
     } else {
-      cout << t << "  ";
+      fprintf(f, "%d  ", t);
+      //cout << t << "  ";
     }
     for (int x = 0; x < w; x++) {
       if (Komplex(x, y).abs() >= max_abs) continue;
       if (dej(Komplex(x, y)).pr) {
-        cout << ":.";
+        fprintf(f, ":.");
+        //cout << ":.";
       } else {
-        cout << x%10 << y%10;
+        fprintf(f, "%d%d", x%10, y%10);
+        //cout << x%10 << y%10;
       }
     }
-    cout << endl;
+    fprintf(f, "\n");
   }
-  cout << endl << "00  ";
+  fprintf(f, "\n00  ");
   for (int x = 0; x < w; x++) {
     int t = ((x%1000)/10);
     if (t < 10) {
-      cout << '0' << t;
+      fprintf(f, "0%d", t);
+      //cout << '0' << t;
     } else {
-      cout << t;
+      fprintf(f, "%d", t);
+      //cout << t;
     }
   }
 }
@@ -120,6 +137,10 @@ void zkus_cislo(Komplex z, int d) {
 }
 
 int main(int argc, char** arg) {
+  f = fopen("out.txt", "w");
+  for (int i = w*h-1; i >= 0; i--) {
+    cisla[i] = Vysledek(false, false);
+  }
   int x, y, d;
   for (d = 0; d < w; d++) {
     x = d;
@@ -133,5 +154,6 @@ int main(int argc, char** arg) {
   }
   ukaz_pole();
 
+  fclose(f);
   return 0;
 }
