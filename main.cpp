@@ -80,7 +80,6 @@ void ukaz_pole() {
       //cout << t << "  ";
     }
     for (int x = 0; x < w; x++) {
-      if (Komplex(x, y).abs() >= max_abs) continue;
       if (dej(Komplex(x, y)).pr) {
         fprintf(f, ":.");
         //cout << ":.";
@@ -106,15 +105,12 @@ void ukaz_pole() {
 
 void obsad(Komplex a, Komplex b) {
   Komplex c = a * b;
-  if (dej(b).def && c.im < max_abs && c.re < max_abs && c.abs() < max_abs) {
+  if (c.im > -h && c.re > -w && c.im < h && c.re < w && dej(b).def) {
     dej(c).def = true;
   }
 }
 
 void bublej(Komplex z, int max_d) {
-  if (z.re || z.im) {
-    max_d = min(max_d, max_abs / z.abs());
-  }
   int x, y, d;
   for (d = 0; d <= max_d; d++) {
     x = d;
@@ -129,7 +125,6 @@ void bublej(Komplex z, int max_d) {
 }
 
 void zkus_cislo(Komplex z, int d) {
-  if (z.abs() >= max_abs) return;
   Vysledek& v = dej(z);
   if (!v.def) {
     v.def = true;
